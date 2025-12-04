@@ -1,9 +1,10 @@
-const myBtn = document.getElementById("myBtn")
-const count = document.getElementById("count")
+const btn = document.querySelector(".btn")
+const counter = document.querySelector(".counter")
 
+let count = 0;
 
-
-
-myBtn.addEventListener("click", ()=>{
-    console.log(count)
+btn.addEventListener("click", ()=>{
+    count++;
+    counter.textContent = count;
 })
+
