@@ -11,26 +11,38 @@ let count = 0;
 btn.addEventListener("click", ()=>{
     count++;
     counter.textContent = count;
+     if(count>0){
+    minBtn.disabled = false;
+   }
 })
-
+ 
 addBtn.addEventListener("click", ()=> {
+   
     count++;
     counter.textContent = count;
-})
+
+    if(count>0){
+    minBtn.disabled = false;
+   }
+})  
 
 minBtn.addEventListener("click", ()=> {
     count--;
     counter.textContent = count;
 
-    if(count<0){
+    if(count<1){
         minBtn.disabled = true;
-        counter.textContent = 0;
         console.log("Error")
+        return;
       
     }
-    else
-    {
-
-       
-    }
+  
 })
+
+
+
+
+/*let i = ""
+for (i = 10; i > 5 ; i--){
+    console.log(i);
+}*/
