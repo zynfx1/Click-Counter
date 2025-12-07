@@ -3,10 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Unit Converter</title>
     <link href="./style.css" rel="stylesheet" >
 </head>
-<body class="text-white">
+<body class="text-white  max-w-full max-h-screen bg-jungle-green-600 font-poppins">
+    <header class="bg-jungle-green-950 max-w-full h-20 py-2 px-4 flex  items-center justify-between">
+        
+        <img src="./img/logo5.png" alt="" class="h-full ">
+        
+        <nav class=" ">
+            <ul>
+                <li class="flex gap-10 ">
+                    <a href="#home" class="hover:text-jungle-green-300 hover:font-medium">HOME</a>
+                    <a href="#about" class="hover:text-jungle-green-300 hover:font-medium">ABOUT</a>
+                    <a href="#services" class="hover:text-jungle-green-300 hover:font-medium">SERVICES</a>
+                    <a href="#portfolio" class="hover:text-jungle-green-300 hover:font-medium">PORTFOLIO</a>
+                </li>
+            </ul>
+        </nav>
+
+    </header>
+    <section class="bg-jungle-green-700 max-w-full h-screen flex items-center justify-center text-black ">
+                <div class="bg-white w-3/12 h-3/5 rounded-2xl shadow-2xl shadow-jungle-green-950 px-10 py-2 ">
+                    <h1 class="w-full h-25  flex items-center justify-center font-semibold text-3xl  text-center ">📏 Unit Converter</h1>
+                    <form action="#" class="flex flex-col space-y-5 items-center justify-center  w-full h-3/4">
+                
+                    <div class="w-full h-3/6">
+                        <label class="text-gray-800" >Amount</label><br>
+                        <input type="text" placeholder="Enter number..." class=" w-full h-15 px-2 rounded-md border border-gray-400 " required>
+                    </div>
+
+
+
+                    <div class="w-full h-20  flex items-center justify-center">
+                        <div class="w-full h-full">
+                            <label class="text-gray-800">From</label>
+                             <select name="" id="" class=" w-full h-15 rounded-md border border-gray-400">
+                                <option value="">1</option>
+                                <option value="">2</option>
+                                <option value="">3</option>
+                             </select>
+                        </div>
+                       
+
+                        <div class="w-full flex text-center items-center justify-center font-bold text-gray-800">➜</div>
+
+                        <div class="w-full h-full">
+                            <label class="text-gray-800">To</label>
+                             <select name="" id="" class=" w-full h-15 rounded-md border border-gray-400">
+                                <option value="a">1</option>
+                                <option value="a">2</option>
+                                <option value="a">3</option>
+                             </select>
+                        </div>
+
+
+                    </div>
+
+                    <div class="w-full flex flex-wrap items-center justify-center">
+                            
+                        <input type="button" class="bg-jungle-green-800 text-white rounded-xl w-3/4 h-15 hover:bg-jungle-green-700 cursor-pointer" value="Convert Result">
+                    </div>
+                   
+                    <div class="w-full h-full bg-gray-100 border border-gray-400 flex flex-col items-center justify-center rounded-2xl">
+                        <p class="text-gray-800"">RESULT</p>
+                        <p class="font-bold text-4xl">0.00 kilometer</p>
+                    </div>
+
+                    </form>
+                </div>
+    </section>
+
+    <section class="bg-jungle-green-900 max-w-full h-screen flex items-center justify-center">
+            <h1 class="text-3xl">SECTION 2</h1>
+    </section>
+   <footer class="bg-jungle-green-950 max-w-full h-20"></footer>
+
+
+    <!-- 
     <form action="">
     <div class="bg-jungle-green-950">
         <label for="username">username:</label>
@@ -19,6 +93,8 @@
         
     </div>
     </form>
+-->
+
 
     <style>
        
