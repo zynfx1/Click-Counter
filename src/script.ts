@@ -6,7 +6,7 @@ interface items {
 
 const inventory: items[] = [];
 
-console.log("--- Store ---")
+console.log("--- Store ---");
 
 const addItems = ({item,price,stock}:items) => {
 const newItem = {item, price, stock};
