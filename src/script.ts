@@ -1,46 +1,48 @@
-
-
 interface items {
-  name: string;
-  price: number;
-  stock: number;
-};
+  item: string,
+  price: number,
+  stock: number
+}
 
 const inventory: items[] = [];
 
-console.log('--- Gym Equipments Store ---');
+console.log("--- Store ---")
 
-const addItem = (name: string, price: number, stock: number) => {
-  const newItem = { name, price, stock};
-  inventory.push(newItem);
-  console.log(`Added: ${name}`);
- 
+const addItems = ({item,price,stock}:items) => {
+const newItem = {item, price, stock};
+inventory.push(newItem);
+console.log(`Added: ${item}`);
+
 };
 
-addItem('Static Bar', 8000, 1);
-addItem('Dip Bars', 1000, 1);
+addItems({item:'Static Bar',price:8000,stock:20});
+addItems({item:'Dip Bar',price:8000,stock:20});
 
-const list = ()=> {
   console.log(" ");
-  console.log('--- Inventory List ---');
-  inventory.forEach((products) => {
-    console.log(`${products.name}: ₱${products.price} | ${products.stock}×`);
+console.log(" --- Current Inventory ---");
 
-  });
+const list =()=> {
+const invList = inventory.forEach((item)=>{
+
+console.log(`${item.item}: $${item.price} | ${item.stock}x`);
+
+});
+
+
 };
-
 list();
 
 
-const totalInventoryValue = () => {
-let totalValue = 0;
+const totalInventoryValues = () => {
+let total: number = 0;
 inventory.forEach((items) => {
-  totalValue += items.price * items.stock;
+  total += items.price * items.stock;
+
 });
-  console.log(" ");
- console.log(`Total Inventory Value: ₱${totalValue}`);
+console.log(" ");
+  console.log(`Total Inventory Value: $${total}`);
 
 };
 
-totalInventoryValue();
-//npm run build
+
+totalInventoryValues();
