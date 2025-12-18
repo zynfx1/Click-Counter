@@ -1,17 +1,18 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-interface Skill {
+interface Groceries {
   id: number;
-  name: string;
-  level: string;
+  item: string;
+  price: number;
 }
 
-const mySkill = ref<Skill[]>([
-  { id: 1, name: "Typescript", level: "Beginner" },
-  { id: 2, name: "C##", level: "Beginner" },
-  { id: 3, name: "Vue", level: "Learning" },
+const groceries = ref<Groceries[]>([
+  {id: 1, item: "Apples", price: 3},
+  {id: 2, item: "Bananas", price: 1},
+  {id: 3, item: "Carrots", price: 2},
 ]);
+
 </script>
 
 <template>
@@ -31,19 +32,17 @@ const mySkill = ref<Skill[]>([
     </header>
 
     <section
-      v-for="skill in mySkill"
-      :key="skill.id"
-      class="bg-jungle-green-800 w-full h-screen text-center flex flex-col items-center justify-center font-poppins text-2xl"
-    >
-      <h1>My Skills</h1>
 
+      class="bg-jungle-green-800 w-full h-screen text-center flex items-center justify-center font-poppins text-2xl"
+       >
+       <div class="bg-jungle-green-700 flex flex-col items-center justify-center p-5 rounded-lg shadow-lg ">
+      <h1 class="font-bold bg-jungle-green-900 w-full">Grocery List</h1>
       <ul>
-        <li>
-          <strong>{{ skill.name }}</strong> > {{ skill.level }}
+        <li v-for="item in groceries" :key="item.id">
+         {{ item.item }} - ${{ item.price }}
         </li>
       </ul>
-
-      <h1>{{ skill.name }}</h1>
+      </div>
     </section>
 
     <section
