@@ -1,5 +1,7 @@
 <script setup lang="ts">
+
 import { ref } from "vue";
+
 
 interface Groceries {
   id: number;
@@ -11,6 +13,7 @@ const groceries = ref<Groceries[]> ([
   {id: 1, item: "Apples", price: 31},
   {id: 2, item: "Bananas", price: 11},
   {id: 3, item: "Carrots", price: 21},
+  
 ]);
 
 const removeItm = (id: number) => {
@@ -21,16 +24,32 @@ const newItemName = ref('');
 const newItemPrice = ref(0);
 
 const addNewItem = ()=> {
+if(newItemName.value === '' && newItemPrice.value === 0){
+return;
+}
+
+if(newItemPrice.value <= 0){
+  const message = JSON.stringify("Please input a valid price value.");
+  alert(message);
+  return;
+}
 
 const newItem: Groceries = {
   id: Date.now(),
-  item: newItemName.value,
+  item: newItemName.value.charAt(0).toUpperCase() + newItemName.value.slice(1),
   price: newItemPrice.value,
 }
-
 groceries.value.push(newItem)
-  newItemName.value = ''
-  newItemPrice.value = 0
+
+};
+
+
+const resetItem = ()=> {
+
+  
+newItemName.value = "";
+newItemPrice.value = 0;
+
 };
 
 
@@ -65,22 +84,26 @@ groceries.value.push(newItem)
         </li>
       </ul>-->
       <div class="text-lg w-full h-full flex items-center justify-center my-2">
-        <form action="#">
+        <form>
         <label for="" class="float-left">Add Item:</label>
-        <input  v-model="newItemName" type="text" class="w-full h-full bg-white text-black outline-1 outline-gray-400 text-md px-2" placeholder="Enter product name..." required>
+        <input v-model="newItemName" maxlength="10" type="text" class="w-full h-full capitalize bg-white text-black outline-1 outline-gray-400 text-md px-2" placeholder="Enter product name..." required>
        
         <br>
         <label for="itemPrice" class="float-left">Add Price:</label>
-        <input v-model="newItemPrice" type="text" id="itemPrice" class="w-full h-full bg-white text-black outline-1 outline-gray-400 text-md px-2" placeholder="Enter product price..." required>
+        <input v-model="newItemPrice" maxlength="10" type="number" step=".000" id="itemPrice" class="w-full h-full bg-white text-black outline-1 outline-gray-400 text-md px-2" placeholder="Enter product price..." required>
         <br>
+        <div class=" w-full h-full flex gap-5">
         <button @click="addNewItem" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Add Item</button>
+        <button @click="resetItem" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Reset</button>
+        </div>
         </form>
       </div>
       <div class="w-full h-full flex items-center justify-between flex-col  bg-jungle-green-800 py-5" >
         <h1>Inventory List:</h1>
+        <h1 v-if="groceries.length === 0">Out Of Stocks</h1>
        <ul>
-        <li  v-for="item in groceries" :key="item.id" class="flex gap-20 items-center justify-between">
-          {{ item.item }} - ${{ item.price }}
+        <li v-for="item in groceries" :key="item.id" class="flex gap-20 items-center justify-between">
+         {{ item.item }} - ${{ item.price }}
        
        <!-- <button class="w-3/6 h-20 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Add Item</button>-->
         <button class=" mx-2 w-10 flex items-center justify-center rounded-xl hover:bg-jungle-green-900 hover:rounded-xl transition duration-200 text-sm" @click="removeItm(item.id)"><img src="./del.png" alt="delete" class="w-8 h-8"></button>
