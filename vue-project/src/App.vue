@@ -52,6 +52,10 @@ newItemPrice.value = 0;
 
 };
 
+const findItems = (items: string) => {
+  const foundItem = groceries.value.find(item => item.item === items);
+  console.log(foundItem)
+};
 
 </script>
 
@@ -95,6 +99,7 @@ newItemPrice.value = 0;
         <div class=" w-full h-full flex gap-5">
         <button @click="addNewItem" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Add Item</button>
         <button @click="resetItem" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Reset</button>
+        
         </div>
         </form>
       </div>
@@ -102,12 +107,12 @@ newItemPrice.value = 0;
         <h1>Inventory List:</h1>
         <h1 v-if="groceries.length === 0">Out Of Stocks</h1>
        <ul>
-        <li v-for="item in groceries" :key="item.id" class="flex gap-20 items-center justify-between">
+        <li v-for="item in groceries" :key="item.item" class="flex gap-20 items-center justify-between">
          {{ item.item }} - ${{ item.price }}
        
        <!-- <button class="w-3/6 h-20 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Add Item</button>-->
         <button class=" mx-2 w-10 flex items-center justify-center rounded-xl hover:bg-jungle-green-900 hover:rounded-xl transition duration-200 text-sm" @click="removeItm(item.id)"><img src="./del.png" alt="delete" class="w-8 h-8"></button>
-       
+       <button @click="findItems(item.item)" class="w-3/6 h-20 my-5 bg-jungle-green-800 rounded-lg hover:bg-jungle-green-900 transition duration-200">Find</button>
         </li>
        </ul>
        
