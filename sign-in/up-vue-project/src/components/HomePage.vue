@@ -3,11 +3,6 @@ import type { userAcc } from '../user.ts';
 import {computed, ref} from 'vue';
 import SignIn from './SignIn.vue';
 
-const isModalOpen = ref(false);
-
-const toggleModal = ()=> {
-  isModalOpen.value = !isModalOpen.value;
-};
 
 
 const props = defineProps<{
@@ -83,19 +78,7 @@ logout
         </ul>
       
       </div>
-      <div class="flex items-center justify-center ">
-          <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Click Me</button>
-          <Teleport to="body">
-            <div v-if="isModalOpen" class="bg-amber-800/50 flex items-center justify-center fixed inset-3/12 z-999 ">
-              <div class="flex flex-col items-center justify-center">
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <br> Alias, quas recusandae? Aliquam illum ullam modi, 
-                  quo laudantium itaque in doloremque? Unde veniam officiis quas reiciendis enim totam fugit eaque ab!</p>
-                  <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Click Me</button>
-              </div>
-            </div>
-          </Teleport>
-          
-      </div>
+    
     </section>
     <footer class=" bg-baltic-blue-950 w-full h-20">
 
