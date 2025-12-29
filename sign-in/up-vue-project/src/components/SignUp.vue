@@ -6,6 +6,7 @@ const newUserName = ref('');
 const newUserEmail = ref('');
 const newUserPassword = ref('');
 
+
 const props = defineProps<{
 isUserNameExist: boolean;
 isUserEmailExist: boolean;
@@ -14,6 +15,7 @@ isUserEmailExist: boolean;
 const emit = defineEmits<{
 (e: 'userCreated',  payload: userAcc): void
 (e: 'signUpnavigate', page: string): void
+(e: 'isClose'): void
 }>();
 
 const goToHome = ()=>{
@@ -40,6 +42,7 @@ const createAcc = ()=> {
     };
 
     emit('userCreated', newAcc);
+   
     newUserName.value = '';
     newUserEmail.value = '';
     newUserPassword.value = '';
@@ -88,8 +91,10 @@ const createAcc = ()=> {
                         
                     </div>
                     <div class="w-full flex items-center justify-center gap-5 my-2">
-                        <button  @click="createAcc" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Create Account</button>
+                        <button  @click="createAcc"  class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Create Account</button>
                         <button class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Clear</button>
+                        
+                        
                     </div>
                     <p class="w-full flex items-center justify-center gap-1 my-1">Already have an Account?<a class="text-baltic-blue-300  cursor-pointer" href="#" @click.prevent="goToSignIn">Sign In</a></p>
                 
