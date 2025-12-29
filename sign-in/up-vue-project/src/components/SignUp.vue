@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import type { userAcc } from '../user.ts';
 
-const isDisabled = ref(false);
 const newUserName = ref('');
 const newUserEmail = ref('');
 const newUserPassword = ref('');

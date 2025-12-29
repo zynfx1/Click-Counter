@@ -3,6 +3,11 @@ import type { userAcc } from '../user.ts';
 import {computed, ref} from 'vue';
 import SignIn from './SignIn.vue';
 
+const isModalOpen = ref(false);
+
+const toggleModal = ()=> {
+  isModalOpen.value = !isModalOpen.value;
+};
 
 
 const props = defineProps<{
@@ -45,7 +50,7 @@ logout
 
 
 <template >
-  <div class=" bg-baltic-blue-900 max-w-full h-screen font-poppins text-white" >
+  <div class="bg-baltic-blue-900 max-w-full h-screen font-poppins text-white body-div" >
     <header class=" bg-baltic-blue-950 w-f h-20 flex items-center justify-between px-4">
       <img class="w-18 h-18" src="/public/img/logo5.png" alt="">
       <nav>
@@ -62,7 +67,7 @@ logout
         </ul>
       </nav>
     </header>
-    <section class="bg-baltic-blue-900 w-full h-full flex items-center justify-center">
+    <section class="bg-baltic-blue-900 w-full h-full flex flex-col items-center justify-center gap-2 ">
       <div class="bg-baltic-blue-600 flex flex-col items-center justify-center p-5 rounded-lg">
         <h1 class="text-2xl">Profile</h1>
         <br>
@@ -77,6 +82,19 @@ logout
           </li>
         </ul>
       
+      </div>
+      <div class="flex items-center justify-center ">
+          <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Click Me</button>
+          <Teleport to="body">
+            <div v-if="isModalOpen" class="bg-amber-800/50 flex items-center justify-center fixed inset-3/12 z-999 ">
+              <div class="flex flex-col items-center justify-center">
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. <br> Alias, quas recusandae? Aliquam illum ullam modi, 
+                  quo laudantium itaque in doloremque? Unde veniam officiis quas reiciendis enim totam fugit eaque ab!</p>
+                  <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Click Me</button>
+              </div>
+            </div>
+          </Teleport>
+          
       </div>
     </section>
     <footer class=" bg-baltic-blue-950 w-full h-20">
