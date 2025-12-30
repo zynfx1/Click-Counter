@@ -2,8 +2,11 @@
 import type { userAcc } from '../user.ts';
 import {computed, ref} from 'vue';
 import SignIn from './SignIn.vue';
+const isDelModalOpen = ref(false);
 
-
+const toggleModal = ()=> {
+  isDelModalOpen.value = !isDelModalOpen.value;
+};
 
 const props = defineProps<{
   accountList: userAcc[]
@@ -73,7 +76,25 @@ logout
             <p>Email: {{props.user.email }}</p><br>
             <p>Pass: {{ props.user.password}}</p><br>
             <p>-------------------------------</p>
-              <button @click="requestDelAcc(props.user.name)" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>
+            <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>
+            <Teleport to="body">
+              <div v-if="isDelModalOpen === true" class=" bg-white flex items-center justify-center fixed bottom-53 top-93 inset-y-50 inset-x-180 z-999 font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30">
+                <div class="flex flex-col items-center justify-center gap-3">
+                  <div class="flex flex-col items-center justify-center">
+                    <h1 class=" text-2xl font-bold my-5 relative bottom-5">Delete User</h1>
+                    <p>Are you sure you want to delete your account, <strong>{{ props.user.name }}</strong>?</p>
+                  </div>
+                  <div class="">
+                    <img src="/public/img/delModal.png" alt="" class="w-100 h-17 rounded-lg">
+                  </div>
+                  <div class="flex items-center justify-center gap-40 ">
+                    <button @click="toggleModal" class="w-30 h-15 rounded-lg bg-baltic-blue-900 hover:bg-white hover:text-black border-2  transition duration-300 cursor-pointer text-white">No, Cancel</button>
+                    <button @click="requestDelAcc(props.user.name)" class="w-30 h-15 rounded-lg bg-white border-2 hover:bg-red-700 hover:text-white hover:border-black transition duration-300 cursor-pointer">Yes, Delete</button>
+                  </div>
+                </div>
+              </div>
+            </Teleport>
+              <!--<button @click="requestDelAcc(props.user.name)" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>-->
           </li>
         </ul>
       
