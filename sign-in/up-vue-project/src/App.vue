@@ -13,8 +13,8 @@ const isUserEmailExist = ref(false);
 const isUserPassExist = ref(false);
 const currentUser = ref<userAcc | null>(null);
 const currentPage = ref('home');
-const isModalOpen = ref<boolean | null>(null);
-
+const isModalCreateOpen = ref<boolean | null>(null);
+const isModalLoginOpen = ref<boolean | null>(null);
 
 
 const saveNewUser = (user: userAcc) =>{
@@ -27,11 +27,15 @@ const saveNewUser = (user: userAcc) =>{
   if(emailUserFound){
   console.log('email alrdy exist');
   isUserEmailExist.value = true;
-  isModalOpen.value = false;
+  isModalCreateOpen.value = false;
+    setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
   return;
 
   }else{
-    isModalOpen.value = !isModalOpen.value;
+
+ isModalCreateOpen.value = !isModalCreateOpen.value;
      isUserNameExist.value = false;
     isUserEmailExist.value = false;
     accounts.value.push(user);
@@ -39,12 +43,19 @@ const saveNewUser = (user: userAcc) =>{
     currentUser.value = user;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
+
+    setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
   }
 
  }else{
   console.log('username alrdy exist');
   isUserNameExist.value = true;
-  isModalOpen.value = false;
+  isModalCreateOpen.value = false;
+    setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
    return;
  }
 };
@@ -73,16 +84,28 @@ if(foundUser){
   isUserEmailExist.value = false;
 
   if(foundUser.password === user.password){
+    isModalLoginOpen.value = !isModalLoginOpen.value;
     isUserPassExist.value = false;
      isLoggedIn.value = 'loggedin';
     currentUser.value = foundUser;
     currentPage.value = 'home';
+      setTimeout(()=> {
+    isModalLoginOpen.value = null;
+    }, 1000);
   } else{
     isUserPassExist.value = true;
+    isModalLoginOpen.value = false;
+       setTimeout(()=> {
+    isModalLoginOpen.value = null;
+    }, 1000);
   }
 
 } else {
   isUserEmailExist.value = true;
+ isModalLoginOpen.value = false;
+    setTimeout(()=> {
+    isModalLoginOpen.value = null;
+    }, 1000);
 }
 
 
@@ -114,16 +137,29 @@ if(foundUser){
     />
 
   <Teleport to="body">                   
-    <div v-if="isModalOpen === true" class="bg-green-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+    <div v-if="isModalCreateOpen === true" class="bg-green-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
       <div class="flex items-center justify-center text-center ">
         <label for="">Successfully created an account</label>
-        <button @click="isModalOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
-    <div v-if="isModalOpen === false" class="bg-red-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+    <div v-if="isModalCreateOpen === false" class="bg-red-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
       <div class="flex items-center justify-center text-center ">
         <label for="">Failed to create account</label>
-        <button @click="isModalOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+      </div>
+    </div>
+
+    <div v-if="isModalLoginOpen === true" class="bg-green-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+      <div class="flex items-center justify-center text-center ">
+        <label for="">Login Successful</label>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+      </div>
+    </div>
+     <div v-if="isModalLoginOpen === false" class="bg-red-100   flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+      <div class="flex items-center justify-center text-center ">
+        <label for="">Incorrect username or password. <br> Please try again</label>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
   </Teleport>
