@@ -94,7 +94,8 @@ logout
             <p>-------------------------------</p>
             <button @click="toggleModal" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>
             <Teleport to="body">
-              <div v-if="isDelModalOpen === true" class=" bg-white flex items-center justify-center fixed lg:bottom-18 lg:top-58 bottom-53 top-93 inset-y-50 lg:inset-x-100 lg:inset-y-40 inset-x-180 z-999 font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30">
+              <Transition name="fade" enter-active-class="duration-500 ease-out" enter-from-class="opacity-0 scale-95" leave-active-class="duration-300 ease-out" leave-from-class="opacity-100" leave-to-class="opacity-0 scale-80">
+              <div v-if="isDelModalOpen === true"  class=" bg-white flex items-center justify-center fixed lg:bottom-18 lg:top-58 bottom-53 top-93 inset-y-50 lg:inset-x-100 lg:inset-y-40 inset-x-180 z-999 font-poppins rounded-md text-black drop-shadow-xl drop-shadow-black/30">
                 <div class="flex flex-col items-center justify-center gap-3">
                   <div class="flex flex-col items-center justify-center">
                     <h1 class=" text-2xl font-bold my-5 relative bottom-5">Delete User</h1>
@@ -109,6 +110,7 @@ logout
                   </div>
                 </div>
               </div>
+              </Transition>
             </Teleport>
               <!--<button @click="requestDelAcc(props.user.name)" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Delete Account</button>-->
           </li>
