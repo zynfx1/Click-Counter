@@ -7,24 +7,65 @@ import type { userAcc } from './user.ts';
 
 const savedAccs = localStorage.getItem('my_users');
 const accounts = ref<userAcc[]>(savedAccs ? JSON.parse(savedAccs): []);
-const isLoggedIn = ref(false);
-const isUserEmailExist = ref(true);
-const isUserPassExist = ref(true);
+const isLoggedIn = ref<'loggedin' | 'logout'>('logout');
+const isUserNameExist = ref(false);
+const isUserEmailExist = ref(false);
+const isUserPassExist = ref(false);
+const currentUser = ref<userAcc | null>(null);
+const currentPage = ref('home');
+const isModalCreateOpen = ref<boolean | null>(null);
+const isModalLoginOpen = ref<boolean | null>(null);
 
 
 const saveNewUser = (user: userAcc) =>{
-  accounts.value.push(user);
-  localStorage.setItem('my_users', JSON.stringify(accounts.value));
-  isLoggedIn.value = true;
-  currentPage.value = 'home';
+ const nameUserFound = accounts.value.find(acc => acc.name === user.name);
+ const emailUserFound = accounts.value.find(acc => acc.email === user.email);
+
+ if(!nameUserFound){
+  isUserNameExist.value = false;
+
+  if(emailUserFound){
+  console.log('email alrdy exist');
+  isUserEmailExist.value = true;
+  isModalCreateOpen.value = false;
+    setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
+  return;
+
+  }else{
+
+ isModalCreateOpen.value = !isModalCreateOpen.value;
+     isUserNameExist.value = false;
+    isUserEmailExist.value = false;
+    accounts.value.push(user);
+    localStorage.setItem('my_users', JSON.stringify(accounts.value));
+    currentUser.value = user;
+    isLoggedIn.value = 'loggedin';
+    currentPage.value = 'home';
+
+    setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
+  }
+
+ }else{
+  console.log('username alrdy exist');
+  isUserNameExist.value = true;
+  isModalCreateOpen.value = false;
+    setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
+   return;
+ }
 };
 
 const handleLogout =()=>{
-  isLoggedIn.value = false;
+  isLoggedIn.value = 'logout';
+  currentUser.value = null;
+  console.log('current user log out');
 };
 
-
-const currentPage = ref('signin');
 
 const handleNav = (pageName: string) => {
   currentPage.value = pageName;
@@ -33,23 +74,39 @@ const handleNav = (pageName: string) => {
 const deleteAcc = (name: string) => {
   accounts.value = accounts.value.filter(acc => acc.name !== name);
   localStorage.setItem('my_users', JSON.stringify(accounts.value));
+  currentUser.value = null;
+   isLoggedIn.value = 'logout';
+   window.location.reload();
 };
 
 const findCurrentUser = (user: userAcc) => {
  const foundUser= accounts.value.find(acc => acc.email === user.email);
 if(foundUser){
-  isUserEmailExist.value = true;
+  isUserEmailExist.value = false;
 
   if(foundUser.password === user.password){
-    isUserPassExist.value = true;
-    isLoggedIn.value = true;
-    currentPage.value = 'home';
-  } else{
+    isModalLoginOpen.value = !isModalLoginOpen.value;
     isUserPassExist.value = false;
+     isLoggedIn.value = 'loggedin';
+    currentUser.value = foundUser;
+    currentPage.value = 'home';
+    setTimeout(()=> {
+      isModalLoginOpen.value = null;
+    },1000);
+  } else{
+    isUserPassExist.value = true;
+    isModalLoginOpen.value = false;
+       setTimeout(()=> {
+    isModalLoginOpen.value = null;
+    }, 1000);
   }
 
 } else {
-  isUserEmailExist.value = false;
+  isUserEmailExist.value = true;
+ isModalLoginOpen.value = false;
+    setTimeout(()=> {
+    isModalLoginOpen.value = null;
+    }, 1000);
 }
 
 
@@ -64,20 +121,49 @@ if(foundUser){
 <template>
   <div>
     <SignUp v-if="currentPage === 'signup'" 
-    @signUpnavigate="handleNav" @userCreated="saveNewUser"
+    @signUpnavigate="handleNav" @userCreated="saveNewUser" :isUserNameExist="isUserNameExist" :isUserEmailExist="isUserEmailExist"
+    :user="currentUser"
     />
   
      <SignIn v-else-if="currentPage === 'signin'" 
-     @navigate="handleNav" @requestLogAcc="findCurrentUser" :userFound="accounts"  :isUserEmailExist="isUserEmailExist" :isUserPassExist="isUserPassExist"
+     @navigate="handleNav" @requestLogAcc="findCurrentUser" :userFound="accounts"  :isUserEmailExist="isUserEmailExist" :isUserPassExist="isUserPassExist" 
+     :user="currentUser"
      />
 
 
    
     
     <HomePage v-else-if="currentPage === 'home'"
-     @navigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout" @handleDelete="deleteAcc"
+     @navigate="handleNav" :accountList="accounts" :isLoggedIn="isLoggedIn" @logout="handleLogout" @handleDelete="deleteAcc" :user="currentUser" 
     />
 
+  <Teleport to="body">                   
+    <div v-if="isModalCreateOpen === true" class="bg-green-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+      <div class="flex items-center justify-center text-center ">
+        <label for="">Successfully created an account</label>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+      </div>
+    </div>
+    <div v-if="isModalCreateOpen === false" class="bg-red-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+      <div class="flex items-center justify-center text-center ">
+        <label for="">Failed to create account</label>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+      </div>
+    </div>
+
+    <div v-if="isModalLoginOpen === true" class="bg-green-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+      <div class="flex items-center justify-center text-center ">
+        <label for="">Login Successful</label>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+      </div>
+    </div>
+     <div v-if="isModalLoginOpen === false" class="bg-red-100   flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+      <div class="flex items-center justify-center text-center ">
+        <label for="">Incorrect username or password. <br> Please try again</label>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+      </div>
+    </div>
+  </Teleport>
     </div>
    
 </template>
