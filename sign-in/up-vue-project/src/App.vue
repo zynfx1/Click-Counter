@@ -76,6 +76,7 @@ const deleteAcc = (name: string) => {
   localStorage.setItem('my_users', JSON.stringify(accounts.value));
   currentUser.value = null;
    isLoggedIn.value = 'logout';
+   window.location.reload();
 };
 
 const findCurrentUser = (user: userAcc) => {
@@ -89,9 +90,9 @@ if(foundUser){
      isLoggedIn.value = 'loggedin';
     currentUser.value = foundUser;
     currentPage.value = 'home';
-      setTimeout(()=> {
-    isModalLoginOpen.value = null;
-    }, 1000);
+    setTimeout(()=> {
+      isModalLoginOpen.value = null;
+    },1000);
   } else{
     isUserPassExist.value = true;
     isModalLoginOpen.value = false;
@@ -137,29 +138,29 @@ if(foundUser){
     />
 
   <Teleport to="body">                   
-    <div v-if="isModalCreateOpen === true" class="bg-green-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+    <div v-if="isModalCreateOpen === true" class="bg-green-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
       <div class="flex items-center justify-center text-center ">
         <label for="">Successfully created an account</label>
-        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
-    <div v-if="isModalCreateOpen === false" class="bg-red-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+    <div v-if="isModalCreateOpen === false" class="bg-red-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
       <div class="flex items-center justify-center text-center ">
         <label for="">Failed to create account</label>
-        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalCreateOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
 
-    <div v-if="isModalLoginOpen === true" class="bg-green-100  flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
+    <div v-if="isModalLoginOpen === true" class="bg-green-100  flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold ">
       <div class="flex items-center justify-center text-center ">
         <label for="">Login Successful</label>
-        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
-     <div v-if="isModalLoginOpen === false" class="bg-red-100   flex items-center justify-center fixed left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
+     <div v-if="isModalLoginOpen === false" class="bg-red-100   flex items-center justify-center fixed lg:left-275 lg:bottom-135 left-390 w-3/17 float-right bottom-208 h-20 rounded-2xl z-999 text-red-800 font-poppins font-semibold ">
       <div class="flex items-center justify-center text-center ">
         <label for="">Incorrect username or password. <br> Please try again</label>
-        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 bottom-15 left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
   </Teleport>
