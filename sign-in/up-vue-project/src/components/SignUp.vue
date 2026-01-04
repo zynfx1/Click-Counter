@@ -75,7 +75,7 @@ const createAcc = ()=> {
     </header>
    
     <section class="bg-baltic-blue-900 w-full h-full flex items-center justify-center">
-        <div class=" bg-white xl:w-3/12 lg:w-3/8  rounded-2xl">
+        <div class=" bg-white  lg:w-3/8 2xl:w-3/12 rounded-2xl">
             <div class="text-baltic-blue-500 w-full h-30 flex flex-col items-center justify-center ">
                 
                 <h1 class=" text-5xl font-semibold ">Sign Up</h1>

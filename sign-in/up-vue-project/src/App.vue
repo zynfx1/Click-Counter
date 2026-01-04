@@ -180,7 +180,7 @@ const handleLogout =()=>{
     <div v-if="isModalLoginOpen === true" class="bg-green-100 flex items-center justify-center fixed  w-3/17 float-right h-20 rounded-2xl z-999 text-green-800 font-poppins font-semibold lg:left-275 lg:bottom-135 2xl:left-390 2xl:bottom-208">
       <div class="flex items-center justify-center text-center ">
         <label for="">Login Successful</label>
-        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 xl:bottom-15 xl:left-78"><img src="/public/img/close3.png" alt=""></button>
+        <button @click="isModalLoginOpen = null" class="w-4 h-4 absolute lg:left-54 2xl:bottom-15 2xl:left-78"><img src="/public/img/close3.png" alt=""></button>
       </div>
     </div>
      </Transition>
