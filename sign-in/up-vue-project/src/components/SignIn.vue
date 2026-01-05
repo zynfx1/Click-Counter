@@ -41,6 +41,10 @@ emit('requestLogAcc', user);
 
 };
 
+const clearItem = ()=> {
+  currentUserEmail.value = '';
+  currentUserPass.value = '';
+};
 
 
 </script>
@@ -98,7 +102,7 @@ emit('requestLogAcc', user);
                     </div>
                     <div class="w-full flex items-center justify-center gap-5 my-2">
                         <button @click="logInAcc" class=" w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Sign In</button>
-                        <button class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Clear</button>
+                        <button @click="clearItem" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer">Clear</button>
                     </div>
                     <p class="w-full flex items-center justify-center gap-1 my-1">Don't have an account?<a class="text-baltic-blue-200 mx-1 cursor-pointer" href="#" @click.prevent="goToSignUp">Create an Acc</a></p>
                 

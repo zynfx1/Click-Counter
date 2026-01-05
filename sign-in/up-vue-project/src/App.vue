@@ -4,6 +4,7 @@ import SignIn from './components/SignIn.vue';
 import SignUp from './components/SignUp.vue';
 import { ref } from 'vue';
 import type { userAcc } from './user.ts';
+import axios from 'axios';
 
 //if (value) exist ? then TRUE : else FALSE
 
@@ -19,12 +20,9 @@ const currentPage = ref('home');
 const isModalCreateOpen = ref<boolean | null>(null);
 const isModalLoginOpen = ref<boolean | null>(null);
 
+  
 
-
-    
-
-
-const saveNewUser = (user: userAcc) =>{
+const saveNewUser = async (user: userAcc) =>{
  const nameUserFound = accounts.value.find(acc => acc.name === user.name);
  const emailUserFound = accounts.value.find(acc => acc.email === user.email);
 
@@ -33,10 +31,12 @@ const saveNewUser = (user: userAcc) =>{
 
   if(emailUserFound){
   console.log('email alrdy exist');
+
   isUserEmailExist.value = true;
    setTimeout(()=>{
     isUserEmailExist.value = null;
   },2000);
+
   isModalCreateOpen.value = false;
     setTimeout(()=> {
     isModalCreateOpen.value = null;
@@ -44,27 +44,38 @@ const saveNewUser = (user: userAcc) =>{
   return;
 
   }else{
-
- isModalCreateOpen.value = !isModalCreateOpen.value;
-     isUserNameExist.value = false;
+    
+    isModalCreateOpen.value = !isModalCreateOpen.value;
+    isUserNameExist.value = false;
     isUserEmailExist.value = false;
-    accounts.value.push(user);
+  setTimeout(()=> {
+    isModalCreateOpen.value = null;
+    }, 1000);
+
+    try{
+      const response = await axios.post('http://localhost:3000/signup', user);
+      console.log('Server says: ',response.data);
+
+
     localStorage.setItem('my_users', JSON.stringify(accounts.value));
     currentUser.value = user;
     isLoggedIn.value = 'loggedin';
     currentPage.value = 'home';
 
-    setTimeout(()=> {
-    isModalCreateOpen.value = null;
-    }, 1000);
+  
+    } catch(error){
+      console.log('The messenger got lost', error);
+    }
   }
 
  }else{
   console.log('username alrdy exist');
+
   isUserNameExist.value = true;
   setTimeout(()=>{
     isUserNameExist.value = null;
   },2000);
+
   isModalCreateOpen.value = false;
     setTimeout(()=> {
     isModalCreateOpen.value = null;
