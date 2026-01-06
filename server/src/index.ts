@@ -1,5 +1,7 @@
 import express from 'express';
 import cors from 'cors';
+import { get } from 'node:http';
+import { error } from 'node:console';
 
 const app = express();
 const PORT = 3000;
@@ -8,34 +10,43 @@ let users: any[] = [];
 app.use(express.json());
 app.use(cors());
 
-app.get('/status', (req,res )=>{
-     res.send('server is okay');
-})
-
-app.get('/profile',(req,res)=>{
-    res.json({name: 'zyn', role: 'web dev'});
+app.get('/status', (req, res) => {
+  res.send('server is okasy');
 });
 
-app.get('/skills', (req,res)=> {
-    res.json(['intermediate','beginner'])
+app.get('/profile', (req, res) => {
+  res.json({ name: 'zyn', role: 'web dev' });
 });
 
-app.get('/greet/:name',(req,res)=>{
-    const userName = req.params.name
-    res.send(`Hello, ${userName}. Welcome back`)
+app.get('/skills', (req, res) => {
+  res.json(['intermediate', 'beginner']);
 });
 
-app.post('/signup', (req,res)=>{
-    const newUser = req.body;
-
-    users.push(newUser)
-    console.log('Current users on server', users)
-
-    res.json({message: 'User saved successfully', user: newUser})
-
+app.get('/greet/:name', (req, res) => {
+  const userName = req.params.name;
+  res.send(`Hello, ${userName}. Welcome back`);
 });
 
+app.post('/signup', (req, res) => {
+  const { name, email } = req.body;
+  const isUserNameExist = users.find((acc) => acc.name === name);
+  const isUserEmailExist = users.find((acc) => acc.email === email);
 
-app.listen(PORT, ()=> {
-    console.log(`Server is running at http://localhost:${PORT}`)
-})
+  if (isUserNameExist) {
+    return res.status(400).json({ errorType: 'USERNAME_TAKEN' });
+  }
+  if (isUserEmailExist) {
+    return res.status(400).json({ errorType: 'EMAIL_TAKEN' });
+  }
+  users.push(req.body);
+  console.log('Current users on server', users);
+  res.status(201).send({ message: 'User saved successfully' });
+});
+
+app.get('/users/', (req, res) => {
+  res.json(users);
+});
+
+app.listen(PORT, () => {
+  console.log(`Server is running at http://localhost:${PORT}/`);
+});
