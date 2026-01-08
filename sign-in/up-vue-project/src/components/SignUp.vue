@@ -47,6 +47,12 @@ const createAcc = () => {
   newUserEmail.value = '';
   newUserPassword.value = '';
 };
+
+const clearItems = ()=> {
+  newUserName.value = '';
+  newUserEmail.value = '';
+  newUserPassword.value = '';
+};
 </script>
 <template>
   <div class="bg-baltic-blue-900 max-w-full h-screen font-poppins text-white">
@@ -195,7 +201,7 @@ const createAcc = () => {
                 Create Account
               </button>
               <button
-                class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
+                @click="clearItems" class="w-30 h-20 rounded-lg bg-baltic-blue-800 hover:bg-baltic-blue-900 transition duration-300 cursor-pointer"
               >
                 Clear
               </button>
