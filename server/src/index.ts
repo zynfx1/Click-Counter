@@ -48,6 +48,7 @@ app.get('/check-users', (req, res) => {
   const password = req.query.password;
   const isUserEmailExist = users.find((acc) => acc.email === email);
 
+
   if (isUserEmailExist) {
     if (isUserEmailExist.password === password) {
       res.json(isUserEmailExist);
@@ -59,6 +60,17 @@ app.get('/check-users', (req, res) => {
   }
 });
 
+app.delete('/delete-user', (req, res) => {
+const email = req.body;
+const isUserEmailExist = users.find(acc => acc.email === email)
+if(isUserEmailExist){
+  users = users.filter(acc => acc.email === email);
+  
+}
+});
+
+
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}/`);
 });
+

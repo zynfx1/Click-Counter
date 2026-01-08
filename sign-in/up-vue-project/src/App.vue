@@ -67,7 +67,9 @@ const handleNav = (pageName: string) => {
   currentPage.value = pageName;
 };
 
-const deleteAcc = (name: string) => {
+const deleteAcc = async (name: string) => {
+const respone = await axios.delete('http://localhost:3000/delete-user');
+
   accounts.value = accounts.value.filter((acc) => acc.name !== name);
   localStorage.setItem('my_users', JSON.stringify(accounts.value));
   currentUser.value = null;
