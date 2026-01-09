@@ -167,7 +167,7 @@ logout
                         No, Cancel
                       </button>
                       <button
-                        @click="requestDelAcc(props.user.name)"
+                        @click="requestDelAcc(props.user.email)"
                         class="w-30 h-15 rounded-lg bg-white border-2 hover:bg-red-700 hover:text-white hover:border-black transition duration-300 cursor-pointer"
                       >
                         Yes, Delete

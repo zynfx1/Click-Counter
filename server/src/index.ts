@@ -48,7 +48,6 @@ app.get('/check-users', (req, res) => {
   const password = req.query.password;
   const isUserEmailExist = users.find((acc) => acc.email === email);
 
-
   if (isUserEmailExist) {
     if (isUserEmailExist.password === password) {
       res.json(isUserEmailExist);
@@ -60,17 +59,12 @@ app.get('/check-users', (req, res) => {
   }
 });
 
-app.delete('/delete-user', (req, res) => {
-const email = req.body;
-const isUserEmailExist = users.find(acc => acc.email === email)
-if(isUserEmailExist){
-  users = users.filter(acc => acc.email === email);
-  
-}
+app.delete('/delete-user/:email', (req, res) => {
+  const emailToDelete = req.params.email;
+  users = users.filter((acc) => acc.email !== emailToDelete);
+  res.status(201).json({ msg: 'ACC_DELETED' });
 });
-
 
 app.listen(PORT, () => {
   console.log(`Server is running at http://localhost:${PORT}/`);
 });
-
