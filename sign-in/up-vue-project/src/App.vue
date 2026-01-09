@@ -67,14 +67,18 @@ const handleNav = (pageName: string) => {
   currentPage.value = pageName;
 };
 
-const deleteAcc = async (name: string) => {
-const respone = await axios.delete('http://localhost:3000/delete-user');
-
-  accounts.value = accounts.value.filter((acc) => acc.name !== name);
-  localStorage.setItem('my_users', JSON.stringify(accounts.value));
-  currentUser.value = null;
-  isLoggedIn.value = 'logout';
-  window.location.reload();
+const deleteAcc = async (email: string) => {
+  try {
+    const respone = await axios.delete(
+      `http://localhost:3000/delete-user/${email}`
+    );
+    console.log(respone.data.msg);
+    currentUser.value = null;
+    isLoggedIn.value = 'logout';
+    window.location.reload();
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const findCurrentUser = async (user: userAcc) => {
